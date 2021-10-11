@@ -69,7 +69,7 @@ echo "Terminei o NTP em $(date '+%d-%m-%y %H:%M:%S')" >> $ARQUIVO_LOG_UNIFICADO
 
 echo "Inicia o QOTD em $(date '+%d-%m-%y %H:%M:%S')" >> $ARQUIVO_LOG_UNIFICADO
 ######################################### PORTA(S) 17 ##################################################
-nmap -T5 -n -Pn -sU --host-timeout 10 -oA $caminho_do_relatorio/$VAR1/17.log -p 17 200.234.192.0/20 200.234.208.0/20 201.76.32.0/19 189.126.96.0/19 187.45.192.0/19 187.45.224.0/19 186.202.0.0/16 177.153.0.0/16 179.188.0.0/16 191.252.0.0/16
+nmap -T5 -n -Pn -sUV --host-timeout 10 -oA $caminho_do_relatorio/$VAR1/17.log -p 17 200.234.192.0/20 200.234.208.0/20 201.76.32.0/19 189.126.96.0/19 187.45.192.0/19 187.45.224.0/19 186.202.0.0/16 177.153.0.0/16 179.188.0.0/16 191.252.0.0/16
 ########################################################################################################
 echo "Terminei o QOTD em $(date '+%d-%m-%y %H:%M:%S')" >> $ARQUIVO_LOG_UNIFICADO
 
@@ -93,7 +93,7 @@ echo "Terminei o PORTMAP em $(date '+%d-%m-%y %H:%M:%S')" >> $ARQUIVO_LOG_UNIFIC
 
 echo "Inicia o TFTP em $(date '+%d-%m-%y %H:%M:%S')" >> $ARQUIVO_LOG_UNIFICADO
 ######################################### PORTA(S) 69 ##################################################
-nmap -sU -p 69 --version-intensity 10 --host-timeout 10 -oA $caminho_do_relatorio/$VAR1/69.log --script tftp-enum.nse --script-args tftp-enum.filelist=customlist.txt 200.234.192.0/20 200.234.208.0/20 201.76.32.0/19 189.126.96.0/19 187.45.192.0/19 187.45.224.0/19 186.202.0.0/16 177.153.0.0/16 179.188.0.0/16 191.252.0.0/16
+nmap -sUV -p 69 --version-intensity 10 --host-timeout 10 -oA $caminho_do_relatorio/$VAR1/69.log --script tftp-enum.nse --script-args tftp-enum.filelist=customlist.txt 200.234.192.0/20 200.234.208.0/20 201.76.32.0/19 189.126.96.0/19 187.45.192.0/19 187.45.224.0/19 186.202.0.0/16 177.153.0.0/16 179.188.0.0/16 191.252.0.0/16
 #OBS: https://www.shodan.io/search?query=tftp
 ########################################################################################################
 echo "Terminei o TFTP em $(date '+%d-%m-%y %H:%M:%S')" >> $ARQUIVO_LOG_UNIFICADO
@@ -107,7 +107,7 @@ echo "Terminei o NETBIOS em $(date '+%d-%m-%y %H:%M:%S')" >> $ARQUIVO_LOG_UNIFIC
 
 echo "Inicia o LDAP em $(date '+%d-%m-%y %H:%M:%S')" >> $ARQUIVO_LOG_UNIFICADO
 ######################################### PORTA(S) 389 #################################################
-nmap -p 389 -Pn --script ldap-search --script-args 'ldap.username="cn=ldaptest,cn=users,dc=cqure,dc=net",ldap.password=ldaptest,ldap.qfilter=custom,ldap.searchattrib="operatingSystem",ldap.searchvalue="Windows *Server*",ldap.attrib={operatingSystem,whencreated,OperatingSystemServicePack}' --host-timeout 10 -oA $caminho_do_relatorio/$VAR1/389.log 200.234.192.0/20 200.234.208.0/20 201.76.32.0/19 189.126.96.0/19 187.45.192.0/19 187.45.224.0/19 186.202.0.0/16 177.153.0.0/16 179.188.0.0/16 191.252.0.0/16
+nmap -p 389 -sUV -Pn --script ldap-search --script-args 'ldap.username="cn=ldaptest,cn=users,dc=cqure,dc=net",ldap.password=ldaptest,ldap.qfilter=custom,ldap.searchattrib="operatingSystem",ldap.searchvalue="Windows *Server*",ldap.attrib={operatingSystem,whencreated,OperatingSystemServicePack}' --host-timeout 10 -oA $caminho_do_relatorio/$VAR1/389.log 200.234.192.0/20 200.234.208.0/20 201.76.32.0/19 189.126.96.0/19 187.45.192.0/19 187.45.224.0/19 186.202.0.0/16 177.153.0.0/16 179.188.0.0/16 191.252.0.0/16
 ########################################################################################################
 echo "Terminei o LDAP em $(date '+%d-%m-%y %H:%M:%S')" >> $ARQUIVO_LOG_UNIFICADO
 

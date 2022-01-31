@@ -5,8 +5,7 @@
 
 # ########################################################################## #
 # MUDANÇAS QUE PRECISO REALIZAR                                              #
-# COMPRIMIR ARQUIVO APÓS FIM DO SCAN                                         #                           
-# CRIAR .HTACCESS PARA BLOQUEAR acesso http de fora do range do escritorio   #
+# COMPRIMIR ARQUIVO APÓS FIM DO SCAN                                         #
 # ADICIONAR O SCAN DA PORTA 25                                               #
 # ########################################################################## #
 
@@ -21,6 +20,11 @@
 # nbstat.nse                                     #
 # tftp-enum.nse                                  #
 # ############################################## #
+
+# IPS QUE SERÃO SCANEADOS                    #
+IP=200.234.192.0/20 200.234.208.0/20         #
+IP_MASSCAN=200.234.192.0/20,200.234.208.0/20 #
+# ########################################## #
 
 # #################################################### #
 # CONFIG RELACIONADO AO NMAP                           #
@@ -51,63 +55,63 @@ echo "Iniciando NMAP em $(date '+%d-%m-%y %H:%M:%S')" >> $ARQUIVO_LOG_UNIFICADO
 
 echo "Inicia o DNS em $(date '+%d-%m-%y %H:%M:%S')" >> $ARQUIVO_LOG_UNIFICADO
 ######################################### PORTA(S) 53 E 5353 ###########################################
-nmap --script=dns-service-discovery --host-timeout 20 -n -sUV -oA $caminho_do_relatorio/$VAR1/53.log -p 53 200.234.192.0/20 200.234.208.0/20 201.76.32.0/19 189.126.96.0/19 187.45.192.0/19 187.45.224.0/19 186.202.0.0/16 177.153.0.0/16 179.188.0.0/16 191.252.0.0/16
+nmap --script=dns-service-discovery --host-timeout 20 -n -sUV -oA $caminho_do_relatorio/$VAR1/53.log -p 53 $IP
 ########################################################################################################
 echo "Terminei o DNS em $(date '+%d-%m-%y %H:%M:%S')" >> $ARQUIVO_LOG_UNIFICADO
 
 echo "Inicia o MDNS em $(date '+%d-%m-%y %H:%M:%S')" >> $ARQUIVO_LOG_UNIFICADO
 ######################################### PORTA(S) 53 E 5353 ###########################################
-nmap --script=dns-service-discovery --host-timeout 20 -n -sUV -oA $caminho_do_relatorio/$VAR1/5353.log -p 5353 200.234.192.0/20 200.234.208.0/20 201.76.32.0/19 189.126.96.0/19 187.45.192.0/19 187.45.224.0/19 186.202.0.0/16 177.153.0.0/16 179.188.0.0/16 191.252.0.0/16
+nmap --script=dns-service-discovery --host-timeout 20 -n -sUV -oA $caminho_do_relatorio/$VAR1/5353.log -p 5353 $IP
 ########################################################################################################
 echo "Terminei o MDNS em $(date '+%d-%m-%y %H:%M:%S')" >> $ARQUIVO_LOG_UNIFICADO
 
 echo "Inicia o NTP em $(date '+%d-%m-%y %H:%M:%S')" >> $ARQUIVO_LOG_UNIFICADO
 ######################################### PORTA(S) 123 #################################################
-nmap -T5 -n -Pn -sUV --host-timeout 10 -oA $caminho_do_relatorio/$VAR1/123.log -p 123 200.234.192.0/20 200.234.208.0/20 201.76.32.0/19 189.126.96.0/19 187.45.192.0/19 187.45.224.0/19 186.202.0.0/16 177.153.0.0/16 179.188.0.0/16 191.252.0.0/16
+nmap -T5 -n -Pn -sUV --host-timeout 10 -oA $caminho_do_relatorio/$VAR1/123.log -p 123 $IP
 ########################################################################################################
 echo "Terminei o NTP em $(date '+%d-%m-%y %H:%M:%S')" >> $ARQUIVO_LOG_UNIFICADO
 
 echo "Inicia o QOTD em $(date '+%d-%m-%y %H:%M:%S')" >> $ARQUIVO_LOG_UNIFICADO
 ######################################### PORTA(S) 17 ##################################################
-nmap -T5 -n -Pn -sUV --host-timeout 10 -oA $caminho_do_relatorio/$VAR1/17.log -p 17 200.234.192.0/20 200.234.208.0/20 201.76.32.0/19 189.126.96.0/19 187.45.192.0/19 187.45.224.0/19 186.202.0.0/16 177.153.0.0/16 179.188.0.0/16 191.252.0.0/16
+nmap -T5 -n -Pn -sUV --host-timeout 10 -oA $caminho_do_relatorio/$VAR1/17.log -p 17 $IP
 ########################################################################################################
 echo "Terminei o QOTD em $(date '+%d-%m-%y %H:%M:%S')" >> $ARQUIVO_LOG_UNIFICADO
 
 echo "Inicia o SNMP em $(date '+%d-%m-%y %H:%M:%S')" >> $ARQUIVO_LOG_UNIFICADO
 ######################################### PORTA(S) 161 #################################################
-nmap -sUV -p 161 --host-timeout 10 -oA $caminho_do_relatorio/$VAR1/161.log -T5 200.234.192.0/20 200.234.208.0/20 201.76.32.0/19 189.126.96.0/19 187.45.192.0/19 187.45.224.0/19 186.202.0.0/16 177.153.0.0/16 179.188.0.0/16 191.252.0.0/16
+nmap -sUV -p 161 --host-timeout 10 -oA $caminho_do_relatorio/$VAR1/161.log -T5 $IP
 ########################################################################################################
 echo "Terminei o SNMP em $(date '+%d-%m-%y %H:%M:%S')" >> $ARQUIVO_LOG_UNIFICADO
 
 echo "Inicia o MEMCACHED em $(date '+%d-%m-%y %H:%M:%S')" >> $ARQUIVO_LOG_UNIFICADO
 ######################################### PORTA(S) 11211 ###############################################
-nmap -sUV -p 11211 --host-timeout 10 -T5 -oA $caminho_do_relatorio/$VAR1/11211.log --host-timeout 10 200.234.192.0/20 200.234.208.0/20 201.76.32.0/19 189.126.96.0/19 187.45.192.0/19 187.45.224.0/19 186.202.0.0/16 177.153.0.0/16 179.188.0.0/16 191.252.0.0/16
+nmap -sUV -p 11211 --host-timeout 10 -T5 -oA $caminho_do_relatorio/$VAR1/11211.log --host-timeout 10 $IP
 ########################################################################################################
 echo "Terminei o MEMCACHED em $(date '+%d-%m-%y %H:%M:%S')" >> $ARQUIVO_LOG_UNIFICADO
 
 echo "Inicia o PORTMAP em $(date '+%d-%m-%y %H:%M:%S')" >> $ARQUIVO_LOG_UNIFICADO
 ######################################### PORTA(S) 111 #################################################
-nmap -sUV -p 111 -T5 --host-timeout 10 -oA $caminho_do_relatorio/$VAR1/111.log --host-timeout 10 200.234.192.0/20 200.234.208.0/20 201.76.32.0/19 189.126.96.0/19 187.45.192.0/19 187.45.224.0/19 186.202.0.0/16 177.153.0.0/16 179.188.0.0/16 191.252.0.0/16
+nmap -sUV -p 111 -T5 --host-timeout 10 -oA $caminho_do_relatorio/$VAR1/111.log --host-timeout 10 $IP
 ########################################################################################################
 echo "Terminei o PORTMAP em $(date '+%d-%m-%y %H:%M:%S')" >> $ARQUIVO_LOG_UNIFICADO
 
 echo "Inicia o TFTP em $(date '+%d-%m-%y %H:%M:%S')" >> $ARQUIVO_LOG_UNIFICADO
 ######################################### PORTA(S) 69 ##################################################
-nmap -sUV -p 69 --version-intensity 10 --host-timeout 10 -oA $caminho_do_relatorio/$VAR1/69.log --script tftp-enum.nse --script-args tftp-enum.filelist=customlist.txt 200.234.192.0/20 200.234.208.0/20 201.76.32.0/19 189.126.96.0/19 187.45.192.0/19 187.45.224.0/19 186.202.0.0/16 177.153.0.0/16 179.188.0.0/16 191.252.0.0/16
+nmap -sUV -p 69 --version-intensity 10 --host-timeout 10 -oA $caminho_do_relatorio/$VAR1/69.log --script tftp-enum.nse --script-args tftp-enum.filelist=customlist.txt $IP
 #OBS: https://www.shodan.io/search?query=tftp
 ########################################################################################################
 echo "Terminei o TFTP em $(date '+%d-%m-%y %H:%M:%S')" >> $ARQUIVO_LOG_UNIFICADO
 
 echo "Inicia o NETBIOS em $(date '+%d-%m-%y %H:%M:%S')" >> $ARQUIVO_LOG_UNIFICADO
 ######################################### PORTA(S) 137 #################################################
-nmap -sUV --script nbstat.nse -p 137 -oA $caminho_do_relatorio/$VAR1/137.log --host-timeout 10 200.234.192.0/20 200.234.208.0/20 201.76.32.0/19 189.126.96.0/19 187.45.192.0/19 187.45.224.0/19 186.202.0.0/16 177.153.0.0/16 179.188.0.0/16 191.252.0.0/16
+nmap -sUV --script nbstat.nse -p 137 -oA $caminho_do_relatorio/$VAR1/137.log --host-timeout 10 $IP
 #OBS: https://www.shodan.io/search?query=netbios
 ########################################################################################################
 echo "Terminei o NETBIOS em $(date '+%d-%m-%y %H:%M:%S')" >> $ARQUIVO_LOG_UNIFICADO
 
 echo "Inicia o LDAP em $(date '+%d-%m-%y %H:%M:%S')" >> $ARQUIVO_LOG_UNIFICADO
 ######################################### PORTA(S) 389 #################################################
-nmap -p 389 -sUV -Pn --script ldap-search --script-args 'ldap.username="cn=ldaptest,cn=users,dc=cqure,dc=net",ldap.password=ldaptest,ldap.qfilter=custom,ldap.searchattrib="operatingSystem",ldap.searchvalue="Windows *Server*",ldap.attrib={operatingSystem,whencreated,OperatingSystemServicePack}' --host-timeout 10 -oA $caminho_do_relatorio/$VAR1/389.log 200.234.192.0/20 200.234.208.0/20 201.76.32.0/19 189.126.96.0/19 187.45.192.0/19 187.45.224.0/19 186.202.0.0/16 177.153.0.0/16 179.188.0.0/16 191.252.0.0/16
+nmap -p 389 -sUV -Pn --script ldap-search --script-args 'ldap.username="cn=ldaptest,cn=users,dc=cqure,dc=net",ldap.password=ldaptest,ldap.qfilter=custom,ldap.searchattrib="operatingSystem",ldap.searchvalue="Windows *Server*",ldap.attrib={operatingSystem,whencreated,OperatingSystemServicePack}' --host-timeout 10 -oA $caminho_do_relatorio/$VAR1/389.log $IP
 ########################################################################################################
 echo "Terminei o LDAP em $(date '+%d-%m-%y %H:%M:%S')" >> $ARQUIVO_LOG_UNIFICADO
 
@@ -118,7 +122,7 @@ echo "Iniciando MASSCAN em $(date '+%d-%m-%y %H:%M:%S')" >> $ARQUIVO_LOG_UNIFICA
 echo "Criando arquivo de configuração"
 
 echo "# targets" > $arquivo_do_config
-echo "range = 200.234.192.0/20,200.234.208.0/20,201.76.32.0/19,189.126.96.0/19,187.45.192.0/19,187.45.224.0/19,186.202.0.0/16,177.153.0.0/16,179.188.0.0/16,191.252.0.0/16" >> $arquivo_do_config
+echo "range = "$IP_MASSCAN"" >> $arquivo_do_config
 echo "ports = U:53,U:123,U:17,U:1900,U:11211,U:5353,U:111,U:137,U:19,U:389,U:161,U:69" >> $arquivo_do_config
 echo "ping = False" >> $arquivo_do_config
 echo "rate = 100" >> $arquivo_do_config
